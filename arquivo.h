@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define BLOCK_SIZE 10
+#define BLOCK_SIZE 4096
 
 typedef struct {            
     char name[100];
