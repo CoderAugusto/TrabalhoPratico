@@ -179,8 +179,42 @@ int main() {
 
                 case 3:
                     printf("\n   --- Renomear Diretório ---\n");
-                    printf("   A funcionalidade de renomear diretório ainda não está disponível. Por favor, escolha outra opção.\n");
+
+                    if (strcmp(caminhoAtual, "/") == 0) {
+                        printf("   Você está no diretório raiz. Não é possível renomeá-lo.\n");
+                        break;
+                    }
+
+                    char nomeNovo[50];
+                    printf("   Digite o novo nome para o diretório atual: ");
+                    scanf("%s", nomeNovo);
+
+                    // Extrair o nome atual do diretório (último da barra)
+                    char* nomeAntigo = strrchr(caminhoAtual, '/');
+                    if (nomeAntigo) nomeAntigo++; // pular o '/'
+
+                    // Criar uma cópia do caminho antes de modificá-lo
+                    char caminhoParaPai[500];
+                    strcpy(caminhoParaPai, caminhoAtual);
+
+                    // Encontrar o diretório pai com base na cópia
+                    Diretorio* pai = encontrarDiretorioPai(&disco, diretorioAtual, caminhoParaPai, 1);
+                    if (pai != NULL) {
+                        renomearDiretorio(pai, nomeAntigo, nomeNovo);
+
+                        // Atualiza o caminhoAtual também
+                        char* ultimaBarra = strrchr(caminhoAtual, '/');
+                        if (ultimaBarra) {
+                            *ultimaBarra = '\0';
+                            if (strlen(caminhoAtual) == 0) strcpy(caminhoAtual, "/");
+                            else strcat(caminhoAtual, "/");
+                            strcat(caminhoAtual, nomeNovo);
+                        }
+                    } else {
+                        printf("   Não foi possível localizar o diretório pai para renomear.\n");
+                    }
                     break;
+
 
                 case 4:
                     printf("\n   --- Entrar em um Diretório ---\n");
@@ -191,7 +225,7 @@ int main() {
 
                 case 5:
                     printf("\n   --- Voltar ao Diretório Pai ---\n");
-                    Diretorio* novoDir = encontrarDiretorioPai(&disco, diretorioAtual, caminhoAtual);
+                    Diretorio* novoDir = encontrarDiretorioPai(&disco, diretorioAtual, caminhoAtual, 0);
                     if (novoDir != NULL) {
                         diretorioAtual = novoDir;
                         printf("   Movido com sucesso para o diretório pai. Novo caminho: %s\n", caminhoAtual);

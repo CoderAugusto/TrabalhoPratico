@@ -76,7 +76,7 @@ void navegarDiretorio(Disco* disco, Diretorio** diretorioAtual, char* caminhoAtu
     printf("Diretório '%s' não encontrado.\n", nomeDiretorio);
 }
 
-Diretorio* encontrarDiretorioPai(Disco* disco, Diretorio* diretorioAtual, char* caminhoAtual) {
+Diretorio* encontrarDiretorioPai(Disco* disco, Diretorio* diretorioAtual, char* caminhoAtual, int silencioso) {
     
     char* ultimaBarra = strrchr(caminhoAtual, '/');
     if (ultimaBarra != NULL) {
@@ -88,14 +88,17 @@ Diretorio* encontrarDiretorioPai(Disco* disco, Diretorio* diretorioAtual, char* 
             strcpy(caminhoAtual, "/");
         }
     }
+    
 
     // Iniciar a busca pelo diretório pai a partir do diretório raiz
     Diretorio* diretorioPai = disco->diretorioRaiz;
 
     // verificar se o caminho atual é o diretório raiz
     if (strcmp(caminhoAtual, "/") == 0) {
-        printf("Você já está no diretório raiz.\n");
-        return diretorioPai; // O diretório atual é o diretório raiz, não possui diretório pai
+        if (!silencioso) {
+            printf("Você já está no diretório raiz.\n");
+        }
+        return diretorioPai;
     }
 
     // Fazer uma cópia do caminho atual para evitar modificá-lo
