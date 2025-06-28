@@ -160,18 +160,15 @@ File* create_file(FileSystem* fs, const char* name) {
 }
 
 File* criarArquivo(Disco* disco, Diretorio* diretorioAtual) {
-    // Verificar se há espaço no diretório
     if (verificaListaVazia(diretorioAtual->entradasLivres)) {
         printf("   Erro: Diretório está cheio!\n");
         return NULL;
     }
 
-    // Obter nome do arquivo
     char nomeArquivo[100];
     printf("   Digite o nome do arquivo (com extensão): ");
     scanf("%99s", nomeArquivo);
 
-    // Verificar se já existe
     for (int i = 0; i < MAX_ENTRADAS_DIR; i++) {
         if (strcmp(diretorioAtual->entradasDiretorio[i].nome, nomeArquivo) == 0) {
             printf("   Erro: Arquivo já existe!\n");
@@ -179,90 +176,63 @@ File* criarArquivo(Disco* disco, Diretorio* diretorioAtual) {
         }
     }
 
-    // Obter caminho do arquivo real
-    char caminhoReal[200];
-    printf("   Digite o caminho completo do arquivo real: ");
-    scanf("%199s", caminhoReal);
+    printf("   Digite o conteúdo do arquivo: ");
+    getchar(); // consumir \n pendente
+    char conteudo[4096];
+    fgets(conteudo, sizeof(conteudo), stdin);
 
-    // Abrir arquivo real
-    FILE* arquivoReal = fopen(caminhoReal, "r");
-    if (!arquivoReal) {
-        perror("   Erro ao abrir arquivo");
+    int tamanho = strlen(conteudo);
+    int blocosNecessarios = (tamanho + BLOCK_SIZE - 1) / BLOCK_SIZE;
+
+    if (blocosNecessarios > QTD_ENDERECOS) {
+        printf("   Erro: Arquivo muito grande (máximo %d blocos)\n", QTD_ENDERECOS);
         return NULL;
     }
 
-    // Criar i-node primeiro (para podermos referenciá-lo)
     int indiceINode = primeiroLista(disco->iNodesLivres);
     if (indiceINode == -1) {
         printf("   Erro: Sem i-nodes livres\n");
-        fclose(arquivoReal);
         return NULL;
     }
 
-    // Inicializar i-node como arquivo
-    disco->iNodes[indiceINode] = inicializaINode(arquivo); // Tipo arquivo
+    disco->iNodes[indiceINode] = inicializaINode(arquivo);
 
-    // Alocar estrutura do arquivo simulado
     File* arquivo = (File*)malloc(sizeof(File));
     strncpy(arquivo->name, nomeArquivo, sizeof(arquivo->name));
-
-    // Ler conteúdo do arquivo real
-    fseek(arquivoReal, 0, SEEK_END);
-    long tamanho = ftell(arquivoReal);
-    fseek(arquivoReal, 0, SEEK_SET);
-
-    // Calcular blocos necessários
-    int blocosNecessarios = (tamanho + BLOCK_SIZE - 1) / BLOCK_SIZE;
-    if (blocosNecessarios > QTD_ENDERECOS) {
-        printf("   Erro: Arquivo muito grande (máximo %d blocos)\n", QTD_ENDERECOS);
-        fclose(arquivoReal);
-        free(arquivo);
-        insereLista(disco->iNodesLivres, indiceINode); // Devolve i-node
-        return NULL;
-    }
-
     arquivo->num_blocks = blocosNecessarios;
     arquivo->blocks = (char**)malloc(blocosNecessarios * sizeof(char*));
 
-    // Alocar blocos e ler conteúdo
     for (int i = 0; i < blocosNecessarios; i++) {
         int blocoIdx = primeiroLista(disco->blocosLivres);
         if (blocoIdx == -1) {
             printf("   Erro: Sem blocos livres suficientes\n");
-            // Liberar blocos já alocados
             for (int j = 0; j < i; j++) {
                 insereLista(disco->blocosLivres, disco->iNodes[indiceINode].enderecosBlocos[j]);
             }
             free(arquivo->blocks);
             free(arquivo);
-            fclose(arquivoReal);
             insereLista(disco->iNodesLivres, indiceINode);
             return NULL;
         }
 
-        // Ler conteúdo para o bloco
         disco->blocos[blocoIdx].conteudo = (char*)malloc(BLOCK_SIZE + 1);
-        size_t lidos = fread(disco->blocos[blocoIdx].conteudo, 1, BLOCK_SIZE, arquivoReal);
-        disco->blocos[blocoIdx].conteudo[lidos] = '\0';
+        strncpy(disco->blocos[blocoIdx].conteudo, conteudo + (i * BLOCK_SIZE), BLOCK_SIZE);
+        disco->blocos[blocoIdx].conteudo[BLOCK_SIZE] = '\0';
 
-        // Registrar bloco no i-node
         disco->iNodes[indiceINode].enderecosBlocos[i] = blocoIdx;
         arquivo->blocks[i] = disco->blocos[blocoIdx].conteudo;
     }
-    fclose(arquivoReal);
 
-    // Atualizar tamanho no i-node
     disco->iNodes[indiceINode].atributos.tamanho = tamanho;
 
-    // Adicionar entrada no diretório
     int entradaIdx = primeiroLista(diretorioAtual->entradasLivres);
     strcpy(diretorioAtual->entradasDiretorio[entradaIdx].nome, nomeArquivo);
     diretorioAtual->entradasDiretorio[entradaIdx].iNodeIndice = indiceINode;
 
-    printf("   Arquivo '%s' criado com sucesso (%ld bytes, %d blocos)\n", 
-           nomeArquivo, tamanho, blocosNecessarios);
+    printf("   Arquivo '%s' criado com sucesso (%d bytes, %d blocos)\n", nomeArquivo, tamanho, blocosNecessarios);
     return arquivo;
 }
+
 
 void renomearArquivo(FileSystem* fs, const char* name, const char* nomeNovo) {
     int found = 0;
