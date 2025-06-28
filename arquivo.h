@@ -8,7 +8,7 @@
 #define BLOCK_SIZE 10
 
 typedef struct {            
-    char name[20];
+    char name[100];
     char nomeNovo[20];
     char** blocks;
     char** content;

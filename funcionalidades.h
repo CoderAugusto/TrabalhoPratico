@@ -10,7 +10,7 @@ void listarConteudoDiretorio(Diretorio* diretorioAtual);
 
 // Arquivo
 //void criarArquivo();
-File* criarArquivo();
+File* criarArquivo(Disco* disco, Diretorio* diretorioAtual);
 //void renomearArquivo();
 //void apagarArquivo();
 //void listarConteudoArquivo();

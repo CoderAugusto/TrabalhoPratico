@@ -12,11 +12,12 @@ Atributo inicializaAtributos(Tipo tipo) {
 }
 
 iNode inicializaINode(Tipo tipo) {
-
-    iNode novoINode;
-    novoINode.atributos = inicializaAtributos(tipo);
-
-    return novoINode;
+    iNode novo;
+    novo.atributos = inicializaAtributos(tipo);
+    for (int i = 0; i < QTD_ENDERECOS; i++) {
+        novo.enderecosBlocos[i] = -1; // Inicializa como inválido
+    }
+    return novo;
 }
 
 void imprimirAtributos(Atributo atributo) {
@@ -30,4 +31,13 @@ char* imprimirTipo(Tipo tipo){
         return("diretorio");
     else
         return("arquivo");
+}
+
+iNode inicializaINodeArquivo() {
+    iNode novo;
+    novo.atributos = inicializaAtributos(arquivo);
+    for (int i = 0; i < QTD_ENDERECOS; i++) {
+        novo.enderecosBlocos[i] = -1; // Inicializa como inválido
+    }
+    return novo;
 }

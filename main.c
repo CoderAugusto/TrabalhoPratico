@@ -108,7 +108,7 @@ int exibirMenuFuncionalidades(const char* caminhoAtual) {
     printf("   [3] Renomear Diretório (Em Breve!)\n"); // Indica funcionalidades não implementadas
     printf("   [4] Entrar em um Diretório\n");
     printf("   [5] Voltar ao Diretório Pai\n");
-    printf("   [6] Criar Arquivo (Em Breve!)\n"); // Adicionei este como placeholder
+    printf("   [6] Criar Arquivo\n");
     // Adicione mais operações de arquivo aqui conforme forem implementadas:
     // printf("   [7] Acessar Arquivo\n");
     // printf("   [8] Renomear Arquivo\n");
@@ -202,7 +202,12 @@ int main() {
 
                 case 6:
                     printf("\n   --- Criar Arquivo ---\n");
-                    printf("   A funcionalidade de criar arquivo ainda não está disponível. Por favor, escolha outra opção.\n");
+                    File* novoArquivo = criarArquivo(&disco, diretorioAtual);
+                    if (novoArquivo != NULL) {
+                        printf("   Arquivo criado com sucesso!\n");
+                    } else {
+                        printf("   Falha ao criar arquivo.\n");
+                    }
                     break;
 
                 default:

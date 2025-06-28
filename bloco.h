@@ -1,7 +1,8 @@
 #include "diretorio.h" // que inclui "iNode.h"
 
-typedef struct bloco{
-    // ou vai ter diretorio ou vai ter conteudo
+#define BLOCK_SIZE 4096
+
+typedef struct bloco {
     Diretorio* diretorio; 
-    char* conteudo; 
+    char* conteudo; // Para armazenar dados de arquivo
 } Bloco;
