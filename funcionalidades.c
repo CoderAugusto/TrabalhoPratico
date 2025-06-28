@@ -144,15 +144,32 @@ void listarConteudoDiretorio(Diretorio* diretorioAtual) {
     }
 }
 
-void renomearDiretorio(Diretorio* diretorio, char* nomeDiretorio, char* nomeNovo){
+void renomearDiretorio(Diretorio* diretorio, char* nomeAntigo, char* nomeNovo) {
+    int encontrado = 0;
+
+    // Verifica se o novo nome já existe
     for (int i = 0; i < MAX_ENTRADAS_DIR; i++) {
-        if (strcmp(diretorio->entradasDiretorio[i].nome, nomeDiretorio) == 0) {
-            strcpy(diretorio->entradasDiretorio[i].nome, nomeNovo);
-            // return 1;
+        if (strcmp(diretorio->entradasDiretorio[i].nome, nomeNovo) == 0) {
+            printf("Já existe uma entrada com o nome '%s'.\n", nomeNovo);
+            return;
         }
     }
-    return; // 0; //nao encontrou o diretorio e por isso não renomeou
+
+    // Procura o diretório pelo nome antigo e renomeia
+    for (int i = 0; i < MAX_ENTRADAS_DIR; i++) {
+        if (strcmp(diretorio->entradasDiretorio[i].nome, nomeAntigo) == 0) {
+            strcpy(diretorio->entradasDiretorio[i].nome, nomeNovo);
+            printf("Diretório '%s' renomeado para '%s'.\n", nomeAntigo, nomeNovo);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Diretório '%s' não encontrado.\n", nomeAntigo);
+    }
 }
+
 
 
 File* create_file(FileSystem* fs, const char* name) {
