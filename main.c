@@ -109,8 +109,8 @@ int exibirMenuFuncionalidades(const char* caminhoAtual) {
     printf("   [4] Entrar em um Diretório\n");
     printf("   [5] Voltar ao Diretório Pai\n");
     printf("   [6] Criar Arquivo\n");
+    printf("   [7] Apagar Diretório ATUAL\n");
     // Adicione mais operações de arquivo aqui conforme forem implementadas:
-    // printf("   [7] Acessar Arquivo\n");
     // printf("   [8] Renomear Arquivo\n");
     // printf("   [9] Mover Arquivo\n");
     // printf("   [10] Excluir Arquivo\n");
@@ -243,6 +243,21 @@ int main() {
                         printf("   Arquivo criado com sucesso!\n");
                     } else {
                         printf("   Falha ao criar arquivo.\n");
+                    }
+                    break;
+
+                case 7:
+                    printf("\n   --- Apagar Diretório ATUAL ---\n");
+
+                    /* não permita remover a raiz “/” */
+                    if (strcmp(caminhoAtual, "/") == 0) {
+                        printf("   ❌ O diretório raiz não pode ser apagado.\n");
+                        break;
+                    }
+
+                    /* chama a função que apaga o diretório em que estamos */
+                    if (apagarDiretorioAtual(&disco, &diretorioAtual, caminhoAtual) == 0) {
+                        printf("   ✅ Diretório apagado. Caminho atual: %s\n", caminhoAtual);
                     }
                     break;
 

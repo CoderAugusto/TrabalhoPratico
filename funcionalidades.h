@@ -3,10 +3,10 @@
 // Diretorio
 void criarDiretorio(Disco* disco, Diretorio* diretorioAtual);
 void navegarDiretorio(Disco* disco, Diretorio** diretorioAtual, char* caminhoAtual);
-Diretorio* encontrarDiretorioPai(Disco* disco, Diretorio* diretorioAtual, char* caminhoAtual, int silencioso); 
 void renomearDiretorio(Diretorio* diretorio, char* nomeAntigo, char* nomeNovo);
-//void apagarDiretorio();
+int apagarDiretorioAtual(Disco *disco, Diretorio **dirAtual, char *caminhoAtual);
 void listarConteudoDiretorio(Diretorio* diretorioAtual);
+Diretorio* encontrarDiretorioPai(Disco* disco, Diretorio* diretorioAtual, char* caminhoAtual, int silencioso); // silencioso para não imprimir mensagens quando já estiver no diretório raiz
 
 // Arquivo
 //void criarArquivo();

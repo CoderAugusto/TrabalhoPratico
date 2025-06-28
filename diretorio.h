@@ -21,12 +21,11 @@ typedef struct diretorio {
     Lista* entradasLivres; //melhor ser uma lista com as posicoes livres?
 } Diretorio;
 
-
 void inicializaDiretorio(Diretorio* diretorio);
-
-
 void inicializarEntradaDiretorio(EntradaDiretorio* entradaDiretorio);
 void adicionaEntradaDiretorio(Diretorio* diretorio, char* nome, int indice_iNode);
+int diretorioEstaVazio(Diretorio *dir);
+void removeEntradaDiretorio(Diretorio *dir, int indice);
 
 // achar /usuario/ufv/so/tp
 // I-node para o diretório raiz está na memória

@@ -302,3 +302,46 @@ void lerArquivo(File* file) {      // exibe o conteudo na saída
     }
     printf("\n");
 }
+
+int apagarDiretorioAtual(Disco *disco, Diretorio **dirAtual, char *caminhoAtual) {
+    Diretorio *alvo = *dirAtual;
+
+    if (!diretorioEstaVazio(alvo)) {
+        printf("   ❌ Diretório não está vazio.\n");
+        return -1;
+    }
+
+    Diretorio *pai = encontrarDiretorioPai(disco, alvo, caminhoAtual, 1);
+    if (pai == NULL) {
+        printf("   ❌ Erro interno: pai não encontrado.\n");
+        return -1;
+    }
+
+    // Encontrar e remover a entrada do pai que aponta para alvo
+    for (int i = 0; i < MAX_ENTRADAS_DIR; i++) {
+        if (pai->entradasDiretorio[i].iNodeIndice != -1) {
+            int inodeIdx = pai->entradasDiretorio[i].iNodeIndice;
+            if (disco->iNodes[inodeIdx].atributos.tipo == diretorio &&
+                disco->blocos[disco->iNodes[inodeIdx].enderecosBlocos[0]].diretorio == alvo) {
+                removeEntradaDiretorio(pai, i);
+                // Libera o inode
+                insereLista(disco->iNodesLivres, inodeIdx);
+                // Libera o bloco
+                disco->blocos[disco->iNodes[inodeIdx].enderecosBlocos[0]].diretorio = NULL;
+                insereLista(disco->blocosLivres, disco->iNodes[inodeIdx].enderecosBlocos[0]);
+                break;
+            }
+        }
+    }
+
+    // Volta ao diretório pai
+    *dirAtual = pai;
+
+    char *ultimaBarra = strrchr(caminhoAtual, '/');
+    if (ultimaBarra) {
+        *ultimaBarra = '\0';
+        if (strlen(caminhoAtual) == 0) strcpy(caminhoAtual, "/");
+    }
+
+    return 0;
+}
