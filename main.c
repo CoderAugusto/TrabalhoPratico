@@ -105,7 +105,7 @@ int exibirMenuFuncionalidades(const char* caminhoAtual) {
 
     printf("   [1] Criar Diretório\n");
     printf("   [2] Listar Conteúdo do Diretório\n");
-    printf("   [3] Renomear Diretório (Em Breve!)\n"); // Indica funcionalidades não implementadas
+    printf("   [3] Renomear Diretório \n"); // Indica funcionalidades não implementadas
     printf("   [4] Entrar em um Diretório\n");
     printf("   [5] Voltar ao Diretório Pai\n");
     printf("   [6] Criar Arquivo\n");
@@ -225,12 +225,14 @@ int main() {
 
                 case 5:
                     printf("\n   --- Voltar ao Diretório Pai ---\n");
-                    Diretorio* novoDir = encontrarDiretorioPai(&disco, diretorioAtual, caminhoAtual, 0);
-                    if (novoDir != NULL) {
-                        diretorioAtual = novoDir;
-                        printf("   Movido com sucesso para o diretório pai. Novo caminho: %s\n", caminhoAtual);
-                    } else {
+                    if (strcmp(caminhoAtual, "/") == 0) {
                         printf("   Já está no diretório raiz. Não é possível ir para o pai.\n");
+                    } else {
+                        Diretorio* novoDir = encontrarDiretorioPai(&disco, disco.diretorioRaiz, caminhoAtual, 0);
+                        if (novoDir != NULL) {
+                            diretorioAtual = novoDir;
+                            printf("   Movido com sucesso para o diretório pai. Novo caminho: %s\n", caminhoAtual);
+                        }
                     }
                     break;
 
