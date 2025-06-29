@@ -42,16 +42,6 @@ O trabalho busca reforçar o entendimento dos seguintes conceitos:
 
 ## 🗃️ Estrutura do Projeto
 
-├── main.c # Ponto de entrada com menus e interação do usuário
-├── funcionalidades.c/.h # Funções auxiliares, menus e lógica de alto nível
-├── disco.c/.h # Inicialização e gerenciamento do "disco virtual"
-├── diretorio.c/.h # Criação, navegação, renomeação e remoção de diretórios
-├── arquivo.c/.h # Criação, leitura e estrutura dos arquivos simulados
-├── iNode.c/.h # Inicialização e controle dos i-nodes
-├── bloco.c/.h # Blocos de dados com conteúdo de arquivos
-├── lista.c/.h # Listas encadeadas para gerenciar blocos e i-nodes livres
-├── makefile # Facilita a compilação
-└── README.md # Este arquivo
 
 ---
 
