@@ -14,6 +14,5 @@ void inicializaDisco(Disco* disco, int qtdBlocos) {
     //cria diretorio Raiz
     disco->diretorioRaiz = (Diretorio*)malloc(sizeof(Diretorio));
     inicializaDiretorio(disco->diretorioRaiz);
-    //adicionaEntradaDiretorio(disco->diretorioRaiz,"/",disco->qtdOcupadosINodes);
-    //insereINode(disco);
+
 }

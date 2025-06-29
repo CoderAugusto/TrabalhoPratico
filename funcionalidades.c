@@ -5,7 +5,6 @@ void criarDiretorio(Disco* disco, Diretorio* diretorioAtual) {
     char nome[50];
     printf("\nQual o nome do diretorio? ");
     scanf("%s", nome);
-    // TODO conferir se é um nome válido
 
     // Verificar se o diretório já existe no diretório onde ele será criado
     for (int i = 0; i < MAX_ENTRADAS_DIR; i++) {
@@ -173,11 +172,6 @@ void renomearDiretorio(Diretorio* diretorio, char* nomeAntigo, char* nomeNovo) {
     }
 }
 
-
-
-File* create_file(FileSystem* fs, const char* name) {
-    // implementação da função create_file
-}
 
 File* criarArquivo(Disco* disco, Diretorio* diretorioAtual) {
     if (verificaListaVazia(diretorioAtual->entradasLivres)) {

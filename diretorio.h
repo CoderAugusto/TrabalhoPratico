@@ -17,8 +17,8 @@ typedef struct entradaDiretorio {
 } EntradaDiretorio;
 
 typedef struct diretorio {
-    EntradaDiretorio* entradasDiretorio; //vetor pq vai ter uma quantidade limitada de entradas = 5
-    Lista* entradasLivres; //melhor ser uma lista com as posicoes livres?
+    EntradaDiretorio* entradasDiretorio;
+    Lista* entradasLivres; 
 } Diretorio;
 
 void inicializaDiretorio(Diretorio* diretorio);
@@ -26,10 +26,3 @@ void inicializarEntradaDiretorio(EntradaDiretorio* entradaDiretorio);
 void adicionaEntradaDiretorio(Diretorio* diretorio, char* nome, int indice_iNode);
 int diretorioEstaVazio(Diretorio *dir);
 void removeEntradaDiretorio(Diretorio *dir, int indice);
-
-// achar /usuario/ufv/so/tp
-// I-node para o diretório raiz está na memória
-// dentro do diretorio raiz tem lista de i-nodes dos arquivos/diertorios que estão nele
-// com ele acha o inode /usuario dentro da lista
-// achar o diretorio /usuario
-// ...

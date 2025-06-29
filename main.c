@@ -1,11 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h> // Para system()
-#include <string.h> // Para strcpy
-
-// Assumindo que "funcionalidades.h" contém suas outras definições necessárias
+#include <stdlib.h> 
+#include <string.h> 
 #include "funcionalidades.h"
-
-// --- Funções Auxiliares para a UI ---
 
 // Função para limpar a tela do console
 void limparTela() {
@@ -29,7 +25,7 @@ void pressioneEnterParaContinuar() {
 
 // Menu inicial para configuração do disco (tamanho da partição e do bloco)
 int* menuInicial() {
-    static int escolhas[2]; // Usar 'static' para que o array persista após a função
+    static int escolhas[2]; 
     limparTela();
 
     printf("=================================================\n");
@@ -100,21 +96,16 @@ int exibirMenuFuncionalidades(const char* caminhoAtual) {
     printf("=================================================\n");
     printf("           🚀 MENU DO GERENCIADOR DE ARQUIVOS 🚀 \n");
     printf("=================================================\n");
-    printf("\n   Caminho Atual: %s\n", caminhoAtual); // Sempre mostra o caminho atual
+    printf("\n   Caminho Atual: %s\n", caminhoAtual);
     printf("-------------------------------------------------\n\n");
 
     printf("   [1] Criar Diretório\n");
     printf("   [2] Listar Conteúdo do Diretório\n");
-    printf("   [3] Renomear Diretório \n"); // Indica funcionalidades não implementadas
+    printf("   [3] Renomear Diretório \n");
     printf("   [4] Entrar em um Diretório\n");
     printf("   [5] Voltar ao Diretório Pai\n");
     printf("   [6] Criar Arquivo\n");
     printf("   [7] Apagar Diretório ATUAL\n");
-    // Adicione mais operações de arquivo aqui conforme forem implementadas:
-    // printf("   [8] Renomear Arquivo\n");
-    // printf("   [9] Mover Arquivo\n");
-    // printf("   [10] Excluir Arquivo\n");
-
     printf("\n-------------------------------------------------\n");
     printf("   [0] Sair da Aplicação\n");
     printf("=================================================\n");
@@ -142,15 +133,12 @@ int exibirMenuFuncionalidades(const char* caminhoAtual) {
 // --- Lógica Principal do Programa ---
 
 int main() {
-    int *config_escolhas = menuInicial(); // Chama o menu inicial para configuração
-    // Use config_escolhas[0] para o tamanho da partição, config_escolhas[1] para o tamanho do bloco.
-    // Você precisará passar esses valores para 'inicializaDisco' de forma apropriada.
-    // Por enquanto, manterei seu 'qtdBlocos' original para demonstração.
+    int *config_escolhas = menuInicial();
 
-    int qtdBlocos = 20; // Isso idealmente deve ser determinado por config_escolhas
+    int qtdBlocos = 20;
 
     Disco disco;
-    inicializaDisco(&disco, qtdBlocos); // Inicializa o disco com o diretório raiz
+    inicializaDisco(&disco, qtdBlocos);
 
     Diretorio* diretorioAtual = disco.diretorioRaiz;
     char caminhoAtual[500];

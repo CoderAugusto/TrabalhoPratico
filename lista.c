@@ -38,35 +38,6 @@ int primeiroLista(Lista* lista) {
     return indice;
 }
 
-// void removeLista(Lista *lista, InfoProcesso *infoProcesso){
-
-//     if (lista == NULL || lista->primeiro == NULL) {
-//         return;  // Verifica se a lista está vazia
-//     }
-    
-//     CelulaLista* procura = lista->primeiro;
-//     CelulaLista* anterior = NULL;
-//     while (procura != NULL && procura->infoProcesso != infoProcesso){
-//         anterior = procura;
-//         procura = procura->prox;
-//     }
-//     if(procura == NULL){ 
-//         return;
-//     }
-//     if(anterior == NULL){
-//         lista->primeiro = procura->prox;
-//     }
-//     else{
-//         anterior->prox = procura->prox; //atualiza lista
-//     }
-
-//     // Atualiza o ponteiro "ultimo" se necessário
-//     if (procura == lista->ultimo) {
-//         lista->ultimo = anterior;
-//     }
-//     free(procura);
-// }
-
 void imprimeLista(Lista *lista){
     CelulaLista *aux;
     aux = lista->primeiro;

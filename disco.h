@@ -3,7 +3,7 @@
 #include "bloco.h"
 
 typedef struct disco { 
-    int qtdBlocos; //qtd total de blocos calculada a partir do tamanho da particao e dos blocos
+    int qtdBlocos;
 
     //usar um bloco pra gerenciar  blocos livres = ultimo
     Lista* blocosLivres; // usar= usar para gerenciar espaço livre
@@ -13,10 +13,10 @@ typedef struct disco {
     iNode* iNodes; //bloco 1 armazenar iNodes
 
     //usar um bloco para armazenar o diretorio Raiz = antepenultimo
-    Diretorio* diretorioRaiz; //bloco 2 = 
+    Diretorio* diretorioRaiz;
 
     //restante dos blocos para armazenar arquivos/diretorios
-    Bloco* blocos; // restante dos blocos = arquivos/diretorios
+    Bloco* blocos; 
 } Disco;
 
 void inicializaDisco(Disco *disco, int qtdBlocos);

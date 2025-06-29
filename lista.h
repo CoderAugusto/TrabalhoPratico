@@ -17,4 +17,3 @@ void insereLista( Lista *lista, int indice);
 void removeLista(Lista *lista, int indice);
 int primeiroLista(Lista *lista);
 void imprimeLista(Lista *lista);
-// InfoProcesso* buscaLista (Lista *lista, int idProcesso);
