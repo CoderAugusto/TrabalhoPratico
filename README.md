@@ -42,8 +42,35 @@ O trabalho busca reforçar o entendimento dos seguintes conceitos:
 
 ## 🗃️ Estrutura do Projeto
 
+- **main.c**: Ponto de entrada do programa, contém o loop principal de interação com o usuário.
+- **disco.c / disco.h**: Simula o "disco" onde os blocos de dados são armazenados em memória.
+- **bloco.c / bloco.h**: Gerencia a alocação e liberação de blocos de dados simulados.
+- **iNode.c / iNode.h**: Implementa a estrutura de i-nodes, responsável por armazenar metadados de arquivos e diretórios.
+- **diretorio.c / diretorio.h**: Lógica de criação, navegação e remoção de diretórios.
+- **arquivo.c / arquivo.h**: Responsável pela criação de arquivos simulados a partir de arquivos reais do sistema.
+- **lista.c / lista.h**: Implementação de lista encadeada usada para organizar diretórios e arquivos.
+- **funcionalidades.c / funcionalidades.h**: Reúne as funções de alto nível que implementam as operações disponíveis ao usuário (criar, listar, navegar, apagar, etc.).
+- **makefile**: Automatiza a compilação do projeto.
 
 ---
 
 ## 🛠️ Compilação
+
+Para compilar o projeto, use o `make` na raiz do repositório:
+
+\`\`\`bash
+make
+\`\`\`
+
+Isso vai gerar o executável `main.exe` (ou `a.out`, dependendo do sistema). Para rodar:
+
+\`\`\`bash
+./main.exe
+\`\`\`
+
+Para limpar os arquivos gerados pela compilação:
+
+\`\`\`bash
+make clean
+\`\`\`
 
